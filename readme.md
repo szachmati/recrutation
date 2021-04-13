@@ -12,3 +12,15 @@
 ###### apply 10
 ###### Output 36
 ##### Explanation 10 + 2 * 3 = 36
+
+### Task 2
+##### Problem: File operations
+###### Your task relies on segregating files. At first program should create directories structure:
+* HOME
+* DEV
+* TEST
+###### At the moment when in HOME directory will appear file according to its extension it should be moved in given rules:
+* jar file which creation time is even, will be moved to DEV directory
+* jar file which creation time is not even, will be moved to TEST directory
+* xml file will be moved to DEV directory
+
