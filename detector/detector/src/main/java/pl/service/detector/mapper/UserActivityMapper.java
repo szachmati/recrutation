@@ -1,5 +1,6 @@
 package pl.service.detector.mapper;
 
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import pl.service.detector.dto.StatisticDto;
 import pl.service.detector.dto.UserActivityDto;
@@ -18,10 +19,11 @@ public class UserActivityMapper {
                 .build();
     }
 
-    public StatisticDto mapToStatisticDto(LocalDate visitDate, Long count) {
+    public StatisticDto mapToStatisticDto(Pair<String, LocalDate> pair, Long count) {
         return StatisticDto.builder()
                 .count(count)
-                .date(visitDate)
+                .ipAddress(pair.getFirst())
+                .date(pair.getSecond())
                 .build();
     }
 }

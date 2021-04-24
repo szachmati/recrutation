@@ -35,7 +35,7 @@ public class UserActivityService {
                         Collectors.counting()));
 
         return statisticsMap.entrySet().stream()
-                .map(entry -> userActivityMapper.mapToStatisticDto(entry.getKey().getSecond(), entry.getValue()))
+                .map(entry -> userActivityMapper.mapToStatisticDto(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
 

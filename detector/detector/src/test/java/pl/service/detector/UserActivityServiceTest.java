@@ -1,11 +1,12 @@
 package pl.service.detector;
 
 
+import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import pl.service.detector.dto.StatisticDto;
 import pl.service.detector.dto.UserActivityDto;
 import pl.service.detector.entity.UserActivity;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureEmbeddedDatabase
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserActivityServiceTest {
 
@@ -74,11 +76,13 @@ public class UserActivityServiceTest {
     }
 
     @Test
-    @Disabled //TODO work in progress, needed test instance of db
+    @Sql(scripts = {"/user_activity.sql"}) // <-- given
     public void shouldReturnStatistics() {
         // when
         List<StatisticDto> statistics = userActivityService.getStatistics();
         // then
         assertTrue(!statistics.isEmpty());
+        assertEquals(2, statistics.size());
+        assertEquals(2l, statistics.stream().filter(Utils.distinctByKey(StatisticDto::getIpAddress)).count());
     }
 }

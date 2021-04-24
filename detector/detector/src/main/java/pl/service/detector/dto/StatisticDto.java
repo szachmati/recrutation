@@ -11,4 +11,5 @@ public class StatisticDto {
 
     private final LocalDate date;
     private final Long count;
+    private final String ipAddress;
 }
