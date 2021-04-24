@@ -74,7 +74,7 @@ public class UserActivityServiceTest {
     }
 
     @Test
-    @Disabled //TODO work in progress
+    @Disabled //TODO work in progress, needed test instance of db
     public void shouldReturnStatistics() {
         // when
         List<StatisticDto> statistics = userActivityService.getStatistics();
