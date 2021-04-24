@@ -25,3 +25,16 @@
 * jar file which creation time is not even, will be moved to TEST directory
 * xml file will be moved to DEV directory
 ###### Solution: segregation repository
+
+
+### Task 3
+##### Problem: Spring Boot REST API
+###### Create REST API that will count and report the users visiting web service. API should have 2 endpoints:
+* POST /save which will save every user visitation in db with given input etc:
+{
+  "date": "2020-10-20",
+  "ip": "212.34.52.103"
+}
+If any of paramaters are null, there should be returned HTTP 400.
+* GET /statictics which will show number of user visitation grouped by user ip address and the visitation date
+###### Solution: detector repository
