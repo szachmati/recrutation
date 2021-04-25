@@ -1,4 +1,4 @@
-package pl.files.strategy;
+package pl.files.segregation;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -1,14 +1,12 @@
 package pl.files;
 
 import org.apache.commons.io.FilenameUtils;
-import pl.files.strategy.BaseFileSegregator;
-import pl.files.strategy.JarSegregator;
-import pl.files.strategy.XmlSegregator;
+import pl.files.segregation.BaseFileSegregator;
+import pl.files.segregation.FileSegregationFactory;
+
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-
-import static pl.files.Utils.*;
 
 public class FileSegregator {
 
@@ -20,21 +18,10 @@ public class FileSegregator {
     public static void segregateFiles(BasicFileAttributes fileAttributes, Path path) {
         FileTime fileTime = fileAttributes.creationTime();
         String fileExtension = FilenameUtils.getExtension(path.toString());
-        BaseFileSegregator baseFileSegregator = getSegregator(fileExtension);
+        BaseFileSegregator baseFileSegregator = FileSegregationFactory.create(fileExtension);
 
         baseFileSegregator.segregate(fileTime, path);
 
-    }
-
-    private static BaseFileSegregator getSegregator(String fileExtension) {
-        switch (fileExtension) {
-            case JAR:
-                return new JarSegregator();
-            case XML:
-                return new XmlSegregator();
-            default:
-                throw new UnsupportedOperationException("File type + " + fileExtension + " not supported!");
-        }
     }
 
 }
