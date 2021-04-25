@@ -27,16 +27,14 @@ public class FileSegregator {
     }
 
     private static BaseFileSegregator getSegregator(String fileExtension) {
-        BaseFileSegregator segregator = null;
         switch (fileExtension) {
             case JAR:
-                segregator = new JarSegregator();
-                break;
+                return new JarSegregator();
             case XML:
-                segregator = new XmlSegregator();
-                break;
+                return new XmlSegregator();
+            default:
+                throw new UnsupportedOperationException("File type + " + fileExtension + " not supported!");
         }
-        return segregator;
     }
 
 }
