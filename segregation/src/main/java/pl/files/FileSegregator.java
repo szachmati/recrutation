@@ -1,11 +1,10 @@
 package pl.files;
 
 import org.apache.commons.io.FilenameUtils;
-
-import java.io.IOException;
-import java.nio.file.Files;
+import pl.files.strategy.BaseFileSegregator;
+import pl.files.strategy.JarSegregator;
+import pl.files.strategy.XmlSegregator;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
@@ -18,34 +17,26 @@ public class FileSegregator {
      * if file extension is jar and creation date of file mod2 != 0 then move file to TEST folder
      * if file extension is xml move file to dev folder
      */
-    public static void segregateFiles(BasicFileAttributes fileAttributes, Path path) throws IOException {
+    public static void segregateFiles(BasicFileAttributes fileAttributes, Path path) {
         FileTime fileTime = fileAttributes.creationTime();
         String fileExtension = FilenameUtils.getExtension(path.toString());
-        Path newPath = null;
+        BaseFileSegregator baseFileSegregator = getSegregator(fileExtension);
 
-        switch (fileExtension) {
-            case JAR:
-                if (fileTime.toMillis() % 2 == 0) {
-                    newPath = Paths.get(buildDirectoryPath(DEV + SLASH + path.getFileName().toString()));
-                    moveFile(path, newPath);
-                } else {
-                    newPath = Paths.get(buildDirectoryPath(TEST + SLASH + path.getFileName().toString()));
-                    moveFile(path, newPath);
-                }
-                break;
-            case XML:
-                newPath = Paths.get(buildDirectoryPath(DEV + SLASH + path.getFileName().toString()));
-                moveFile(path, newPath);
-                break;
-            default:
-                break;
-        }
+        baseFileSegregator.segregate(fileTime, path);
+
     }
 
-    private static void moveFile(Path oldPath, Path newPath) throws IOException {
-        if (!Files.exists(newPath)) {
-            Files.move(oldPath, newPath);
+    private static BaseFileSegregator getSegregator(String fileExtension) {
+        BaseFileSegregator segregator = null;
+        switch (fileExtension) {
+            case JAR:
+                segregator = new JarSegregator();
+                break;
+            case XML:
+                segregator = new XmlSegregator();
+                break;
         }
+        return segregator;
     }
 
 }

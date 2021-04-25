@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.INFO;
-import static pl.files.FileSegregator.segregateFiles;
 import static pl.files.Utils.*;
 
 public class FileWatcher {
@@ -39,7 +38,7 @@ public class FileWatcher {
             Path path = Paths.get(buildDirectoryPath(directory + SLASH + fileName));
             if (Files.exists(path)) {
                 BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
-                segregateFiles(attr, path);
+                FileSegregator.segregateFiles(attr, path);
             }
         }
     }
