@@ -1,4 +1,4 @@
-## This repo will contain solved examples of recrutation tasks for java developer position :)
+## This repo contains solved examples of recrutation tasks for java developer position :)
 ### Content of tasks - pdf file in given repository
 
 ### Task 1 
